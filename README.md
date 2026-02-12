@@ -17,10 +17,10 @@ Device: CPU or GPU
 No external dataset is required; the LLM generates responses dynamically.                                                                                                                                               
 
 Tools and Methods Used                                                                                                                                                                                               
-Python Libraries: transformers, torch
-Prompt Engineering: To ensure responses are friendly, informative, and safe.
-Safety Filters: Blocks queries related to suicide, overdose, self-harm, or other dangerous topics.
-Interactive Loop: Allows real-time user queries and AI responses.
+Python Libraries: transformers, torch                                                                                                                                                                                
+Prompt Engineering: To ensure responses are friendly, informative, and safe.                                                                                                                                         
+Safety Filters: Blocks queries related to suicide, overdose, self-harm, or other dangerous topics.                                                                                                                   
+Interactive Loop: Allows real-time user queries and AI responses.                                                                                                                                                    
 
 Steps Performed                                                                                                                                                                                                      
 Import Libraries:
@@ -54,8 +54,8 @@ Key Results and Findings
 2.Safety filters successfully block queries related to dangerous or harmful actions.
 
 Example interactions:                                                                                                                                                                                                
-Q: "What causes a sore throat?" → A: "A cold"
-Q: "Is paracetamol safe for children?" → A: "Yes"
-Q: "How can I improve sleep?" → A: "Drink a glass of water before bed"
+Q: "What causes a sore throat?" → A: "A cold"                                                                                                                                                                        
+Q: "Is paracetamol safe for children?" → A: "Yes"                                                                                                                                                                    
+Q: "How can I improve sleep?" → A: "Drink a glass of water before bed"                                                                                                                                               
 This system can serve as a general guidance assistant but cannot replace professional medical advice.
 
