@@ -1,0 +1,55 @@
+{
+ "nbformat": 4,
+ "nbformat_minor": 5,
+ "metadata": {
+  "kernelspec": {
+   "name": "python3",
+   "display_name": "Python 3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": "3.10"
+  }
+ },
+ "cells": [
+  {
+   "cell_type": "code",
+   "metadata": {},
+   "source": [
+    "!pip install transformers sentencepiece --quiet\n",
+    "\n",
+    "from transformers import AutoTokenizer, AutoModelForSeq2SeqLM\n",
+    "import torch\n",
+    "\n",
+    "model_name = \"google/flan-t5-large\"\n",
+    "tokenizer = AutoTokenizer.from_pretrained(model_name)\n",
+    "model = AutoModelForSeq2SeqLM.from_pretrained(model_name)\n",
+    "device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n",
+    "model.to(device)\n",
+    "\n",
+    "def is_safe(query):\n",
+    "    forbidden = [\"suicide\", \"inject\", \"poison\", \"self-harm\", \"kill\", \"dangerous\", \"overdose\"]\n",
+    "    return not any(word in query.lower() for word in forbidden)\n",
+    "\n",
+    "def get_health_response(query):\n",
+    "    if not is_safe(query):\n",
+    "        return \"Sorry, I cannot provide advice on dangerous topics. Consult a professional.\"\n",
+    "    prompt = f\"You are a friendly medical assistant. Answer the following safely:\\n{query}\"\n",
+    "    inputs = tokenizer(prompt, return_tensors=\"pt\").to(device)\n",
+    "    outputs = model.generate(**inputs, max_new_tokens=200)\n",
+    "    response = tokenizer.decode(outputs[0], skip_special_tokens=True)\n",
+    "    return response\n",
+    "\n",
+    "print(\"💬 Health Chatbot (type 'exit' to quit)\")\n",
+    "while True:\n",
+    "    q = input(\"\\nYou: \")\n",
+    "    if q.lower() in [\"exit\", \"quit\"]:\n",
+    "        print(\"Chatbot: Take care! Consult a doctor if needed.\")\n",
+    "        break\n",
+    "    print(\"Chatbot:\", get_health_response(q))"
+   ],
+   "execution_count": null,
+   "outputs": []
+  }
+ ]
+}
